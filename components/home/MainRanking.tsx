@@ -61,95 +61,108 @@ export default function MainRanking() {
         </div>
 
         <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
-          {ranking.map((company, index) => {
-            const position = index + 1;
 
-            const podiumStyle =
-              position === 1
-                ? "bg-orange-200/50"
-                : position === 2
-                  ? "bg-orange-100/50"
-                  : position === 3
-                    ? "bg-orange-50/50"
-                    : "bg-white";
+          
+{ranking.map((company, index) => {
+  const position = index + 1;
 
-            return (
-              <article
-                key={company.id}
-                className={`group grid grid-cols-[48px_minmax(0,1fr)] items-center gap-3 px-3 py-4 transition-colors hover:bg-orange-50/70 sm:grid-cols-[36px_56px_minmax(0,1fr)_auto] sm:gap-4 sm:px-5 ${index !== ranking.length - 1
-                  ? "border-b border-gray-100"
-                  : ""
-                  } ${podiumStyle}`}
-              >
-                {/* Posición e icono */}
-                <div className="flex flex-col items-center gap-2 sm:contents">
-                  <span
-                    className={`text-center text-sm font-semibold tabular-nums ${position <= 3 ? "text-orange-700" : "text-gray-400"
-                      }`}
-                  >
-                    #{position}
-                  </span>
+  const podiumStyle =
+    position === 1
+      ? "bg-orange-200/50"
+      : position === 2
+        ? "bg-orange-100/50"
+        : position === 3
+          ? "bg-orange-50/50"
+          : "bg-white";
 
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-gray-200/70 bg-white/90 text-orange-500 sm:size-14">
-                    <Building2
-                      className="size-5 sm:size-7"
-                      strokeWidth={1.6}
-                    />
-                  </div>
-                </div>
+  return (
+    <article
+      key={company.id}
+      className={`group grid grid-cols-[48px_minmax(0,1fr)] items-stretch gap-3 px-3 py-4 transition-colors hover:bg-orange-50/70 sm:grid-cols-[36px_56px_minmax(0,1fr)] sm:items-center sm:gap-4 sm:px-5 ${
+        index !== ranking.length - 1 ? "border-b border-gray-100" : ""
+      } ${podiumStyle}`}
+    >
+      {/* Posición e icono */}
+      <div className="flex flex-col items-center justify-center gap-2 sm:contents">
+        <span
+          className={`text-center text-sm font-semibold tabular-nums ${
+            position <= 3 ? "text-orange-700" : "text-gray-400"
+          }`}
+        >
+          #{position}
+        </span>
 
-                {/* Información de la empresa */}
-                <div className="min-w-0">
-                  <div className="flex min-w-0 flex-wrap items-center gap-1.5">
-                    <h3 className="break-words text-sm font-semibold leading-snug text-gray-950 sm:text-base">
-                      {company.name}
-                    </h3>
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-gray-200/70 bg-white/90 text-orange-500 sm:size-14">
+          <Building2
+            className="size-5 sm:size-7"
+            strokeWidth={1.6}
+          />
+        </div>
+      </div>
 
-                    {company.verified && (
-                      <BadgeCheck
-                        className="size-4 shrink-0 fill-blue-500 text-white"
-                        aria-label="Empresa verificada"
-                      />
-                    )}
-                  </div>
+      {/* Información completa de la empresa */}
+      <div className="flex min-w-0 flex-col justify-center sm:col-start-3">
+        {/* Nombre */}
+        <div className="flex min-w-0 flex-wrap items-center gap-1.5">
+          <h3 className="break-words text-sm font-semibold leading-snug text-gray-950 sm:text-base">
+            {company.name}
+          </h3>
 
-                  <p className="mt-1 hidden text-sm text-gray-500 sm:line-clamp-2 sm:block">
-                    {company.description}
-                  </p>
+          {company.verified && (
+            <BadgeCheck
+              className="size-4 shrink-0 fill-blue-500 text-white"
+              aria-label="Empresa verificada"
+            />
+          )}
+        </div>
 
-                  <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1.5 text-xs text-gray-500">
-                    <span className="max-w-full rounded-md bg-white/80 px-2 py-1 leading-snug">
-                      {company.category}
-                    </span>
+        {/* Descripción: solo escritorio */}
+        <p className="mt-1 hidden text-sm text-gray-500 sm:line-clamp-2 sm:block">
+          {company.description}
+        </p>
 
-                    <span className="inline-flex min-w-0 items-center gap-1">
-                      <MapPin className="size-3.5 shrink-0" />
-                      <span className="break-words">
-                        {company.district}, {company.department}
-                      </span>
-                    </span>
-                  </div>
-                </div>
+        {/* Categoría */}
+        <div className="mt-1.5">
+          <span className="inline-block max-w-full rounded-md bg-gray-100 px-2 py-1 text-xs leading-snug text-gray-500">
+            {company.category}
+          </span>
+        </div>
 
-                {/* Patrocinio y perfil */}
-                <div className="col-start-2 flex flex-wrap items-center justify-between gap-2 sm:col-start-auto sm:flex-col sm:items-end">
-                  {company.bid > 0 && (
-                    <span className="inline-flex shrink-0 items-center rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-                      Patrocinado
-                    </span>
-                  )}
+        {/* Ubicación */}
+        <div className="mt-1.5 flex min-w-0 items-center gap-1 text-xs text-gray-500">
+          <MapPin className="size-3.5 shrink-0" />
 
-                  <Link
-                    href={`/empresa/${company.slug}`}
-                    className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-orange-600 hover:text-orange-700 sm:text-sm"
-                  >
-                    Ver perfil
-                    <ArrowRight className="size-3.5" />
-                  </Link>
-                </div>
-              </article>
-            );
-          })}
+          <span className="break-words">
+            {[company.district, company.department]
+              .filter(Boolean)
+              .join(", ")}
+          </span>
+        </div>
+
+        {/* Patrocinio y botón: siempre al final */}
+        <div className="mt-3 flex w-full items-center justify-between gap-2">
+          <div className="min-w-0">
+            {company.bid > 0 && (
+              <span className="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">
+                Patrocinado
+              </span>
+            )}
+          </div>
+
+          <Link
+            href={`/empresa/${company.slug}`}
+            className="ml-auto inline-flex shrink-0 items-center gap-1 text-xs font-medium text-orange-600 hover:text-orange-700 sm:text-sm"
+          >
+            Ver perfil
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </div>
+      </div>
+    </article>
+  );
+})}
+
+
         </div>
 
         <p className="mt-3 text-xs text-gray-400">

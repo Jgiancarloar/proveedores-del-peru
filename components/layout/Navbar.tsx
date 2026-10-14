@@ -20,16 +20,14 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          onClick={() => setMenuOpen(false)}
+          className="group inline-flex items-center gap-3"
           aria-label="Proveedores del Perú, inicio"
-          className="flex shrink-0 items-center gap-2"
         >
-          <Box
-            className="size-8 shrink-0 text-orange-500"
-            strokeWidth={1.8}
-          />
+          <span className="flex size-11 items-center justify-center rounded-xl bg-orange-500 text-white shadow-sm shadow-orange-500/20 transition-transform group-hover:-translate-y-0.5">
+            <Box size={25} strokeWidth={1.8} />
+          </span>
 
-          <span className="text-[17px] font-bold tracking-tight text-gray-950 sm:text-[19px]">
+          <span className="text-xl font-bold tracking-tight text-gray-950">
             Proveedores
             <span className="text-orange-500"> del Perú</span>
           </span>
